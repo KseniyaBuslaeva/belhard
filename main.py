@@ -1,1 +1,2 @@
-Hello World
+
+print("hello from main")
