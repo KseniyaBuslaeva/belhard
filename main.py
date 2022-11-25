@@ -1,2 +1,2 @@
-
-print("hello from main")
+if __name__ == '__main__':
+    print("Hello world from lesson02")
