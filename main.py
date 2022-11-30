@@ -1,2 +1,2 @@
 if __name__ == '__main__':
-    print("Hello world from lesson02")
+    print("Hello from python")
