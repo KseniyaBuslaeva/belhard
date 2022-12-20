@@ -7,7 +7,7 @@
 # вход метода, а также на проверку того, входит ли данное значение в список
 # допустимых значений, в противном случае вызвать соответствующее
 # исключение. Объявить метод объекта press изменяющий атрибут объекта
-# is_pressed на противоположное значение. Написать магический метод __str__
+# is_pressed на противоположное значение. Написать магический метод str
 # возвращающий текст кнопки. Написать метод объекта to_dict возвращающий
 # словарь с ключами - название атрибутов, значения - значения атрибутов.
 # Написать метод класса from_dict принимающий вход словарь с данными о
@@ -15,29 +15,32 @@
 
 class Button:
     button_colors = ['white', 'black', 'red', 'green', 'blue']
+    color = 'white'
 
     def __init__(self, width: int, height: int, text: str) -> None:
-        self.color = 'white'
+
+        if not isinstance(width, int) or width < 0:
+            raise TypeError('width should greater then 0')
+        if not isinstance(height, int) or height < 0:
+            raise TypeError('height should be greater then 0')
+        if not isinstance(text, str):
+            raise TypeError('text button should be a string')
+
         self.is_pressed = False
         self.width = width
         self.height = height
         self.text = text
 
-        if not isinstance(width, int) or width < 0:
-            raise TypeError
-        if not isinstance(height, int) or height < 0:
-            raise TypeError
-        if not isinstance(text, str):
-            raise TypeError
-
     def __str__(self):
         return self.text
 
-    def change_color(self, new_color: str) -> None:
-        if new_color in self.button_colors:
-            self.color = new_color
+    @classmethod
+    def change_color(cls, new_color: str) -> None:
+        if new_color in cls.button_colors:
+            cls.color = new_color
         else:
-            print('Button color should be in defined button colors')
+            print(new_color, 'is not defined button color !!!!')
+            TypeError('No Value')
 
     def press(self) -> None:
         if self.is_pressed:
@@ -48,22 +51,29 @@ class Button:
     def to_dict(self):
         return {'width': self.width, 'height': self.height, 'text': self.text}
 
-    def from_dict(self, new_dict: dict):
-        self.width = new_dict[0]
-        self.height = new_dict[1]
-        self.text = new_dict[2]
-        return self
+    @classmethod
+    def from_dict(cls, new_dict: dict):
+        cls.width = new_dict['width']
+        cls.height = new_dict['height']
+        cls.text = new_dict['text']
+        return cls
 
 
 ok_button = Button(width=45, height=34, text='OK')
 ok_button.press()
-ok_button.change_color(new_color='black1')
+ok_button = Button(width=5, height=34, text='back')
+print('button pressed: ', ok_button.is_pressed)
 
-print(ok_button.color)
-print(ok_button.is_pressed)
+ok_button.change_color(new_color='black')
+print('current button color is: ', ok_button.color)
+
+ok_button.change_color(new_color='yellow')
+
+
 ok_button.press()
-print(ok_button.is_pressed)
-print(str(ok_button))
+print('button pressed: ', ok_button.is_pressed)
+
+print('current button text is: ', str(ok_button))
 print(ok_button.to_dict())
-ok_button.from_dict({0: 34, 1: 32, 2: 'exit'})
-print(ok_button.to_dict())
+new_button = ok_button.from_dict({'width': 20, 'height': 10, 'text': 'exit'})
+print('width: ', new_button.width, 'height', new_button.height, 'button text:', new_button.text)
