@@ -4,7 +4,7 @@
 
 class Category:
     categories = [
-        {'name': 'comedy', 'is_published': True},
+        {'name': 'comedy', 'is_published': False},
         {'name': 'thriller', 'is_published': True},
         {'name': 'romantic', 'is_published': False}]
 
@@ -14,11 +14,24 @@ class Category:
     """Добавить метод make_published принимающий индекс категории и меняющий значение
     ключа is_published на True, если такого индекса нет, вызвать исключение ValueError"""
 
-    def make_published(self, index: int) -> bool:
+    def make_published(self, index: int):
         if index < len(self.categories):
-            print('ggg')
-        pass
+            self.categories[index].update({'is_published': True})
+        else:
+            raise ValueError('index is outbound categories list')
+
+    """Добавить метод make_unpublished принимающий индекс категории и меняющий
+    значение ключа is_published на False, если такого индекса нет, вызвать исключение
+    ValueError"""
+
+    def make_unpublished(self, index: int):
+        if index < len(self.categories):
+            self.categories[index].update({'is_published': False})
+        else:
+            raise ValueError('index is outbound categories list')
 
 
 cat = Category()
-cat.make_published(2)
+cat.make_published(0)
+cat.make_unpublished(1)
+cat.make_published(6)
