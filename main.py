@@ -1,9 +1,8 @@
-if __name__ == '__main__':
-#    print("Hello from python")
-#    print(int(input()) + int(input()))
+class Car:
+    def __init__(self, color: str, count_passengers_seat: bool, is_busy: bool):
+        self.color = color
+        self.count_passengers_seat = count_passengers_seat
+        self.is_busy = is_busy
+    def __str__(self):
+        return f'Car: {self.color=} {self.count_passengers_seat=} {self.is_busy=}'
 
-    list_str = ['ewre', 'AzSdsf', '4534', 'asdf']
-    list_str.sort()
-    print(list_str)
-
-    #key=lambda x: x if isinstance(x, str)
